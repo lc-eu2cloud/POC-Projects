@@ -1,0 +1,36 @@
+{
+    "Comment": "change batch request for failover routing policy: A record to EC2 web server & A + Alias to S3 static website",
+    "Changes": [
+      {
+        "Action": "DELETE",
+        "ResourceRecordSet": {
+          "Name": "www.csacloudspace.cloud",
+          "Type": "A",
+          "SetIdentifier": "EC2",
+          "Failover": "PRIMARY",
+          "TTL": 60,
+          "ResourceRecords": [
+            {
+              "Value": "3.209.219.69"
+            }
+          ],
+          "HealthCheckId": "1b261bbd-aac2-4272-81f0-2b9fc6735022"
+        }
+      },
+      {
+        "Action": "DELETE",
+      "ResourceRecordSet": {
+        "Name": "www.csacloudspace.cloud",
+        "Type": "A",
+        "SetIdentifier": "S3",
+        "Failover": "SECONDARY",
+        "AliasTarget": {
+          "HostedZoneId": "Z3AQBSTGFYJSTF",
+          "DNSName": "s3-website-us-east-1.amazonaws.com",
+          "EvaluateTargetHealth": true
+        },
+        "HealthCheckId": "726b1456-afa0-42f5-932e-4cfbcee2adb6"
+      }
+    }
+    ]
+  }

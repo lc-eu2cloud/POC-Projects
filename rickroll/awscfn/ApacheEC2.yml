@@ -1,0 +1,76 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template to Create an EC2 instance in default VPC
+   
+Parameters:
+  ImageId:
+    Type: String
+    Description: 'Linux 2 AMI for us-east-1 Region'
+    Default: 'ami-0dc2d3e4c0f9ebd18'
+  VpcId:
+    Type: String
+    Description: VPC id
+    Default: vpc-3c078541
+  SubnetId:
+    Type: String
+    Description: Subnet in which to launch an EC2
+    Default: subnet-b8e492de
+  AvailabilityZone:
+    Type: String
+    Description: Availability Zone into which instance will launch
+    Default: us-east-1b
+  InstanceType:
+    Type: String
+    Description: Choosing t2.micro (Free Tier)
+    Default: t2.micro
+  KeyName:
+    Description: SSH Keypair to login to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: A4L
+  SecurityGroupIds:
+    Type: String
+    Description: Security Group ID for the network interface
+    Default: sg-0464d87ced38de243
+
+Resources:
+  ApacheInstance:
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: !Ref ImageId
+      InstanceType: !Ref InstanceType
+      AvailabilityZone: !Ref AvailabilityZone
+      KeyName: !Ref KeyName
+      Tags:
+        - Key: Name
+          Value: ApacheTestEC2
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          AssociatePublicIpAddress: true
+          DeleteOnTermination: true
+          SubnetId: !Ref SubnetId
+          GroupSet: 
+            - !Ref SecurityGroupIds
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          # System Updates
+          sudo yum -y update
+          sudo yum -y upgrade
+          # STEP 2 - Install system software - including Web
+          sudo yum install -y httpd wget
+          # STEP 3 - Web Apache Server Online - and set to startup
+          sudo systemctl enable httpd
+          sudo systemctl start httpd
+  
+  ApacheEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref ApacheInstance
+      Tags:
+        - Key: Name
+          Value: ApacheEIP
+
+
+Outputs:
+  ApacheInstanceId:
+    Description: Instance Id 
+    Value: !Ref ApacheInstance

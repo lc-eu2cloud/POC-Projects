@@ -1,0 +1,7 @@
+{
+    "IPAddress": "3.209.219.69",
+    "Port": 80,
+    "Type": "HTTP",
+    "RequestInterval": 10,
+    "FailureThreshold": 3
+  }

@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template to create R53 Health Checks & Failover Records
+   
+Parameters:
+  HostedZoneId:
+    Type: String
+    Description: Hosted Zone ID
+    Default: Z03836892Z0QE61KPPQ91
+
+Resources:
+  EC2HealthCheck:
+   Type: AWS::Route53::HealthCheck
+   Properties: 
+    HealthCheckConfig: 
+      IPAddress: 44.196.7.87
+      Port: 80
+      Type: HTTP
+      RequestInterval: 10
+      FailureThreshold: 3
+    HealthCheckTags: 
+      - 
+        Key: Name
+        Value: EC2Health
+  
+  S3HealthCheck:
+   Type: AWS::Route53::HealthCheck
+   Properties:
+    HealthCheckConfig: 
+      Port: 80
+      Type: HTTP
+      ResourcePath: '/index.html'
+      FullyQualifiedDomainName: www.csacloudspace.cloud.s3-website-us-east-1.amazonaws.com
+      RequestInterval: 10
+      FailureThreshold: 3
+    HealthCheckTags: 
+      - 
+        Key: Name
+        Value: S3Health
+  
+  FailoverRecordGroup:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      Comment: Creating Failover Records (EC2-Primary & S3-Secondary)
+      HostedZoneId: !Ref HostedZoneId
+      RecordSets:
+       - Name: www.csacloudspace.cloud.
+         Failover: PRIMARY
+         HealthCheckId: !Ref EC2HealthCheck
+         ResourceRecords:
+          - 44.196.7.87
+         SetIdentifier: EC2
+         TTL: 300
+         Type: A
+       - Name: www.csacloudspace.cloud.
+         AliasTarget:
+          DNSName: s3-website-us-east-1.amazonaws.com
+          EvaluateTargetHealth: true
+          HostedZoneId: Z3AQBSTGFYJSTF
+         Failover: SECONDARY
+         HealthCheckId: !Ref S3HealthCheck
+         SetIdentifier: S3
+         Type: A
+
+        
