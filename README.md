@@ -1,4 +1,4 @@
-# Proof of Concept (POC) Projects
+# Proof of Concept (POC)
 
 ## Projects (corresponding folder)
 
