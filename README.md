@@ -8,7 +8,7 @@ Mithrandir
 * Hybrid environment - AWS & on-premises
 
 cantrill
-* Dynamic HA site-to-site VPN (BGP) - Transit/Customer Gateway(2xEC2), 2 IPSEC tunnels/VPN connection, DX (VPC peer)
+* Dynamic HA site-to-site VPN (BGP) - Transit/Customer Gateway(2xEC2 instances), 2 IPSEC tunnels/VPN connection
 * Hybrid DNS between AWS & on-premises - R53 inbound/outbound endpoints, on-prem DNS resolvers (EC2), DX (VPC peer)
 * Web Identity Federation -
 
