@@ -16,5 +16,5 @@ rickroll
 * Domain hosting - R53, website hosting - EC2 & S3
 * * R53 failover routing test via CLI & CloudFormation template (Primary: EC2, Secondary: S3)
 * * S3 static website hosting - root & subdomain bucket; testing HTTP redirect
-*   * * testing CloudFront distribution domain name URL, S3 origin: static website (subdomain bucket)
-*   * * testing CloudFront OAI on S3 origin: static website (subdomain bucket)
+* * * testing CloudFront distribution domain name URL, S3 origin: static website (subdomain bucket)
+* * * testing CloudFront OAI on S3 origin: static website (subdomain bucket)
