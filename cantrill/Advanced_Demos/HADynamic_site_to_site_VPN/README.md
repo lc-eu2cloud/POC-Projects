@@ -5,7 +5,7 @@ In this demo, I used CloudFormation templates to create following base infrastru
 
 ##### AWS Environment
 * 2 virtual servers (EC2 instances, 2 different availability zones, 2 different private subnets)
-* transit gateway for AWS VPC with transit gateway attachments to both EC2 instances
+* transit gateway, transit gateway attachment to AWS VPC using both private subnets
 * Routes:
   * default route to transit gateway (setting up connectivity to On-prem servers in On-prem environment)  
 ##### On-prem Environment
