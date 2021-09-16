@@ -11,7 +11,7 @@ In this demo, I used CloudFormation templates to create following base infrastru
 ##### On-prem Environment
 * 2 On-prem servers (EC2 instances, 2 different private subnets)
 * 2 customer gateways (EC2 instances with private network interface attachments, public subnet)
-* internet gateway, internet gateway attachment for On-prem VPC to public subnet
+* internet gateway, internet gateway attachment to On-prem VPC using public subnet
 * Routes:
   * default route to internet gateway
   * routes to AWS VPC from On-prem servers in private subnets (setting up connectivity to virtual servers in AWS environment)
