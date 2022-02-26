@@ -1,7 +1,7 @@
 ## Course AWS Accounts
 
 #### Course Accounts (General & Production)
-_Create, Secure, Add IAM admin user_
+_Create & Secure Accounts, Add IAM admin user_
 
 [insert image]
 
